@@ -1,0 +1,30 @@
+﻿<Window x:Class="Eternity.MPVM.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Eternity.MPVM"
+        xmlns:behaviors="clr-namespace:Eternity.Resources.Behaviors"
+        xmlns:viewmodels="clr-namespace:Eternity.MPVM.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
+        mc:Ignorable="d"
+        Title="{Binding Title}" Height="450" Width="800"
+        ResizeMode="NoResize" WindowStyle="None"
+        Style="{StaticResource CustomWindowChrome}"
+        WindowStartupLocation="CenterScreen">
+
+    <i:Interaction.Behaviors>
+        <behaviors:WindowBehavior DragMove="True" />
+    </i:Interaction.Behaviors>
+
+    <Grid Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="22"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <!-- Главное содержание (Frame для остальных страниц) -->
+        <Frame Name="MainFrame" Grid.Column="1" Grid.Row="1" NavigationUIVisibility="Hidden" Content="{Binding CurrentPage}"/>
+    </Grid>
+</Window>
