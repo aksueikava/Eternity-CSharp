@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Eternity.DiscordIntegration;
 using Eternity.MPVM.Pages;
 using ReactiveUI;
 
@@ -8,6 +9,7 @@ namespace Eternity.MPVM.ViewModels
     {
         private string? _title;
         private object? _currentPage;
+        private readonly Init _discordRpc;
 
         public string? Title
         {
@@ -18,7 +20,13 @@ namespace Eternity.MPVM.ViewModels
         public object? CurrentPage
         {
             get { return _currentPage; }
-            set { SetProperty(ref _currentPage, value); }
+            set
+            {
+                SetProperty(ref _currentPage, value);
+
+                // Обновление состояния Discord RPC при смене страницы
+                _discordRpc?.SetCurrentPage(value.GetType().Name);
+            }
         }
 
         public MainWindowViewModel()
@@ -26,7 +34,11 @@ namespace Eternity.MPVM.ViewModels
             Title = "Main Window Title";
             CurrentPage = new MainPage();
 
-            // Подписываемся на сообщения в MessageBus
+            // Инициализация Discord RPC
+            _discordRpc = Init.Instance;
+            _discordRpc.Initialize();
+
+            // Подписка на сообщения в MessageBus
             MessageBus.Current.Listen<ApplicationLog>()
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(log =>
@@ -35,11 +47,12 @@ namespace Eternity.MPVM.ViewModels
                     LogContent += log.Message;
                 });
 
-            // Подписываемся на сообщения о навигации
+            // Подписка на сообщения о навигации
             MessageBus.Current.Listen<string>()
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(Navigate);
 
+            NavigateCommand = ReactiveCommand.Create<string>(Navigate);
         }
 
         private string _logContent = string.Empty;
@@ -49,6 +62,8 @@ namespace Eternity.MPVM.ViewModels
             get { return _logContent; }
             set { SetProperty(ref _logContent, value); }
         }
+
+        public ReactiveCommand<string, Unit> NavigateCommand { get; }
 
         private void Navigate(string targetPage)
         {
