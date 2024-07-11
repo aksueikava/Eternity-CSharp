@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using ReactiveUI;
 
 namespace Eternity.MPVM.ViewModels
 {
@@ -12,9 +13,16 @@ namespace Eternity.MPVM.ViewModels
             set { SetProperty(ref _pageTitle, value); }
         }
 
+        public ReactiveCommand<Unit, Unit> NavigateToMainPageCommand { get; }
+
         public TestPageViewModel()
         {
             PageTitle = "Это тестовая страница";
+
+            NavigateToMainPageCommand = ReactiveCommand.Create(() =>
+            {
+                ((MainWindowViewModel)App.Current.MainWindow.DataContext).NavigateToMainPage();
+            });
         }
     }
 }

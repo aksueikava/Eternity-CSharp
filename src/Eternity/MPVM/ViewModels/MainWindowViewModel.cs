@@ -44,5 +44,15 @@ namespace Eternity.MPVM.ViewModels
             get { return _logContent; }
             set { SetProperty(ref _logContent, value); }
         }
+
+        public void NavigateToTestPage()
+        {
+            CurrentPage = new TestPage();
+        }
+
+        public void NavigateToMainPage()
+        {
+            CurrentPage = new MainPage();
+        }
     }
 }

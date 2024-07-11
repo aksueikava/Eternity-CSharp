@@ -14,8 +14,13 @@
 
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="{Binding PageTitle}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0"/>
-            <Button Content="Перейти на Test Page" Command="{Binding NavigateToMainPageCommand}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <!-- Заголовок страницы -->
+            <TextBlock Text="{Binding PageTitle}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,20"/>
+
+            <!-- Кнопки для навигации -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,20">
+                <Button Content="Перейти на Main Page" Margin="10" Command="{Binding NavigateToMainPageCommand}" />
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Page>

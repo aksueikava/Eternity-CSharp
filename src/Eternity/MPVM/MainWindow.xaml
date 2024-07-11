@@ -25,6 +25,6 @@
         </Grid.RowDefinitions>
 
         <!-- Главное содержание (Frame для остальных страниц) -->
-        <Frame Name="MainFrame" Grid.Column="1" Grid.Row="1" NavigationUIVisibility="Hidden" Content="{Binding CurrentPage}"/>
+        <Frame Grid.Column="1" Grid.Row="1" NavigationUIVisibility="Hidden" Content="{Binding CurrentPage}"/>
     </Grid>
 </Window>
