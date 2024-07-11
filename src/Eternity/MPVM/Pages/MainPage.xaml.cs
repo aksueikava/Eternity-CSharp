@@ -11,16 +11,16 @@ namespace Eternity.MPVM.Pages
         public static readonly DependencyProperty ViewModelProperty =
             DependencyProperty.Register(nameof(ViewModel), typeof(MainPageViewModel), typeof(MainPage), new PropertyMetadata(null));
 
-        public MainPageViewModel ViewModel
+        public MainPageViewModel? ViewModel
         {
             get { return (MainPageViewModel)GetValue(ViewModelProperty); }
             set { SetValue(ViewModelProperty, value); }
         }
 
-        object IViewFor.ViewModel
+        object? IViewFor.ViewModel
         {
             get { return ViewModel; }
-            set { ViewModel = (MainPageViewModel)value; }
+            set { ViewModel = (MainPageViewModel?)value; }
         }
 
         public MainPage()
