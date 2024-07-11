@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Eternity.MPVM.Pages;
 using ReactiveUI;
-using System.Reactive.Linq;
 
 namespace Eternity.MPVM.ViewModels
 {
@@ -35,6 +34,12 @@ namespace Eternity.MPVM.ViewModels
                     // Логика обработки лога, например добавление в лог
                     LogContent += log.Message;
                 });
+
+            // Подписываемся на сообщения о навигации
+            MessageBus.Current.Listen<string>()
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .Subscribe(Navigate);
+
         }
 
         private string _logContent = string.Empty;
@@ -45,14 +50,19 @@ namespace Eternity.MPVM.ViewModels
             set { SetProperty(ref _logContent, value); }
         }
 
-        public void NavigateToTestPage()
+        private void Navigate(string targetPage)
         {
-            CurrentPage = new TestPage();
-        }
-
-        public void NavigateToMainPage()
-        {
-            CurrentPage = new MainPage();
+            switch (targetPage)
+            {
+                case "MainPage":
+                    CurrentPage = new MainPage();
+                    break;
+                case "TestPage":
+                    CurrentPage = new TestPage();
+                    break;
+                default:
+                    throw new ArgumentException($"Неподдерживаемый тип страницы: {targetPage}");
+            }
         }
     }
 }

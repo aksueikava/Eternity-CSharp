@@ -13,16 +13,19 @@ namespace Eternity.MPVM.ViewModels
             set { SetProperty(ref _pageTitle, value); }
         }
 
-        public ReactiveCommand<Unit, Unit> NavigateToMainPageCommand { get; }
+        public ReactiveCommand<string, Unit> NavigateToPageCommand { get; }
 
         public TestPageViewModel()
         {
             PageTitle = "Это тестовая страница";
 
-            NavigateToMainPageCommand = ReactiveCommand.Create(() =>
-            {
-                ((MainWindowViewModel)App.Current.MainWindow.DataContext).NavigateToMainPage();
-            });
+            NavigateToPageCommand = ReactiveCommand.Create<string>(Navigate);
+        }
+
+        private void Navigate(string pageName)
+        {
+            // Отправляем сообщение о навигации на указанную страницу
+            MessageBus.Current.SendMessage(pageName);
         }
     }
 }
