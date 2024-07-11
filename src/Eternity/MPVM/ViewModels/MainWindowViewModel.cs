@@ -9,7 +9,7 @@ namespace Eternity.MPVM.ViewModels
     {
         private string? _title;
         private object? _currentPage;
-        private readonly Init _discordRpc;
+        private readonly DiscordRpcService _discordRpc;
 
         public string? Title
         {
@@ -35,7 +35,7 @@ namespace Eternity.MPVM.ViewModels
             CurrentPage = new MainPage();
 
             // Инициализация Discord RPC
-            _discordRpc = Init.Instance;
+            _discordRpc = DiscordRpcService.Instance;
             _discordRpc.Initialize();
 
             // Подписка на сообщения в MessageBus

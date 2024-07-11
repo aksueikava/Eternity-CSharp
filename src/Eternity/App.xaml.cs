@@ -8,6 +8,7 @@ namespace Eternity
     public partial class App : Application
     {
         private readonly ILogger? _logger;
+        private Mutex _mutex;
 
         public App()
         {
@@ -28,11 +29,21 @@ namespace Eternity
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            const string mutexName = "EternityAppMutex";
+            _mutex = new Mutex(true, mutexName, out bool isNewInstance);
+
+            if (!isNewInstance)
+            {
+                var mutexWindow = new MutexWindow();
+                mutexWindow.Show();
+                return;
+            }
+
             base.OnStartup(e);
             SetupExceptionHandling();
 
             // Инициализация Discord RPC
-            Init.Instance.Initialize();
+            DiscordRpcService.Instance.Initialize();
 
             var mainWindow = new MainWindow();
             mainWindow.Show();
@@ -40,7 +51,8 @@ namespace Eternity
 
         protected override void OnExit(ExitEventArgs e)
         {
-            Init.Instance.Shutdown();
+            DiscordRpcService.Instance.Shutdown();
+            _mutex?.ReleaseMutex();
             base.OnExit(e);
         }
     }

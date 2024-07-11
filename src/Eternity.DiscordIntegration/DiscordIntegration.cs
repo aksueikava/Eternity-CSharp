@@ -2,9 +2,9 @@
 
 namespace Eternity.DiscordIntegration
 {
-    public class Init
+    public class DiscordRpcService
     {
-        private static readonly Lazy<Init> _instance = new Lazy<Init>(() => new Init());
+        private static readonly Lazy<DiscordRpcService> _instance = new Lazy<DiscordRpcService>(() => new DiscordRpcService());
         private readonly object _lock = new object();
         private DiscordRpcClient _client;
         private RichPresence _richPresence;
@@ -12,7 +12,7 @@ namespace Eternity.DiscordIntegration
         private int _detailsIndex = 0;
         private string _currentPage = "MainPage";
 
-        private Init()
+        private DiscordRpcService()
         {
             _client = new DiscordRpcClient(Config.ClientId)
             {
@@ -46,7 +46,7 @@ namespace Eternity.DiscordIntegration
             _updateTimer.Start();
         }
 
-        public static Init Instance => _instance.Value;
+        public static DiscordRpcService Instance => _instance.Value;
 
         public void Initialize()
         {

@@ -1,4 +1,6 @@
-﻿namespace Eternity.DiscordIntegration
+﻿using Eternity.DiscordIntegration.Interpreters;
+
+namespace Eternity.DiscordIntegration
 {
     public static class Config
     {

@@ -1,4 +1,4 @@
-﻿namespace Eternity.DiscordIntegration
+﻿namespace Eternity.DiscordIntegration.Interpreters
 {
     public static class PageNameInterpreter
     {
